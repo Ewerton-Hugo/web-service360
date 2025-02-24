@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "db",
+    "host": "localhost",
+    "dialect": "postgres",
+    "ssl": true, 
+    "dialectOptions": {
+      "ssl": {
+        "require": true, 
+        "rejectUnauthorized": false 
+      }
+    }
+  },
+  "production": {
+    "username": "usuario_de_producao",
+    "password": "senha_de_producao",
+    "database": "banco_de_producao",
+    "host": "host_de_producao",
+    "dialect": "postgres",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}

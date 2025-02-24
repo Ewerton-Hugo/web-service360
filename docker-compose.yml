@@ -1,0 +1,36 @@
+# services:
+#   app:
+#     build: .
+#     container_name: cartorio360-back
+#     restart: always
+#     tty: true
+#     volumes:
+#       - .:/var/www
+#     networks:
+#       - app-network
+#     ports: 
+#       - "14193:14193"
+
+# networks:
+#   app-network:
+#     driver: bridge
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: cartorio360-back
+    restart: always
+    tty: true
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+    ports: 
+      - "14193:14193"
+    working_dir: /var/www
+    command: npm run pm2
+
+networks:
+  app-network:
+    driver: bridge
