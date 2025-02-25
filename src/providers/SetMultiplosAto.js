@@ -1,8 +1,7 @@
 const { Console } = require("winston/lib/winston/transports");
 
 function SetMultiplosAto(data) {
-    console.log('EEEEEEEEEEEE')
-    console.log('data', data)
+    console.log('wwww', data)
     const date = new Date();
     const offset = -3; 
     const localISO = new Date(date.getTime() + offset * 60 * 60 * 1000)
@@ -11,10 +10,10 @@ function SetMultiplosAto(data) {
 
     // Gerar o XML
     const ato = `
-<ns2:messageAtos version="${data.version}" numeroSelo="${data.numeroSelo}" xmlns:ns2="${data["xmlns:ns2"]}" xmlns:xsi="${data["xmlns:xsi"]}">
-    <messageID>${data.messageID}</messageID>
-    <messageDate>${data.messageDate}</messageDate>
-    <codigoServentia>111</codigoServentia>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:messageAtos version="${data.xmlData.version}" numeroSelo="${data.xmlData.numeroSelo}" xmlns:ns2="${data.xmlData["xmlns:ns2"]}" xmlns:xsi="${data.xmlData["xmlns:xsi"]}">
+    <messageID>${data.xmlData.messageID}</messageID>
+    <messageDate>${data.xmlData.messageDate}</messageDate>
     <atos>
         ${data.atos.map(ato => `
         <ato xsi:type="ns2:RegistroTitulosDocPJ">
@@ -52,31 +51,21 @@ function SetMultiplosAto(data) {
                 <dataRegistro>${ato.dataRegistro}</dataRegistro>
             </Registro>
             <ClausulaGeral>${ato.ClausulaGeral}</ClausulaGeral>
-
         </ato>
-
-        <atoEmolumento>
-            <id>0</id>
-            <valor>99.21</valor>
-            <quantidade>1</quantidade>
-            <id_tipo_emolumento>73</id_tipo_emolumento>
-            <id_emolumento>123</id_emolumento>
-            <id_desconto>0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
         `).join('')}
     </atos>
     <atosEmolumento>
-            <atoEmolumento>
-                <id>0</id>
-                <valor>198,42</valor>
-                <quantidade>1</quantidade>
-                <id_tipo_emolumento>73</id_tipo_emolumento>
-                <id_emolumento>123</id_emolumento>
-                <id_desconto>0</id_desconto>
-                <id_ato>0</id_ato>
-            </atoEmolumento>
-       
+        ${data.xmlData.atoEmolumento.map(atoEmolumento => `
+        <atoEmolumento>
+            <id>${atoEmolumento.id}</id>
+            <valor>${atoEmolumento.valor}</valor>
+            <quantidade>${atoEmolumento.quantidade}</quantidade>
+            <id_tipo_emolumento>${atoEmolumento.id_tipo_emolumento}</id_tipo_emolumento>
+            <id_emolumento>${atoEmolumento.id_emolumento}</id_emolumento>
+            <id_desconto>${atoEmolumento.id_desconto}</id_desconto>
+            <id_ato>${atoEmolumento.id_ato}</id_ato>
+        </atoEmolumento>
+        `).join('')}
     </atosEmolumento>
 </ns2:messageAtos>`;
 

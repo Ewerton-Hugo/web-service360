@@ -1,29 +1,22 @@
 
-<ns2:messageAtos version="3.0"  
-    numeroSelo="AAA39471"
-    xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    numeroSeloAnterior="AAA39470" flDut="false">
-    
+<ns2:messageAtos version="3.0" numeroSelo="AAA39168" xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" numeroSeloAnterior="" flDut="false">
     <messageID>0</messageID>
-    <messageDate>2025-02-19T20:37:20.643-03:00</messageDate>
-    <codigoServentia>111</codigoServentia>
-
+    <messageDate>2023-10-04T00:00:00.000-03:00</messageDate>
+    <codigoServentia>12</codigoServentia>
     <atos>
-        
-        <ato xsi:type="ns2:ReconhecimentoFirma">
+        <ato xsi:type="ns2:NotasEscrituras" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <idAto>0</idAto>
             <codigoServentia>1</codigoServentia>
-            <dataAto>2025-02-19T20:37:20.643-03:00</dataAto>
-            <tipoAto>15</tipoAto>
-            <valorEmolumento>00.00</valorEmolumento>
-            <valorAto>18.04</valorAto>
-            <responsavel>24</responsavel>
-            <id_imposto>12</id_imposto>
+            <dataAto>2023-05-17T00:00:00.000-03:00</dataAto>
+            <tipoAto>2</tipoAto>
+            <valorEmolumento>0</valorEmolumento>
+            <valorAto>28.86</valorAto>
+            <responsavel>1</responsavel>
             <idAtos>0</idAtos>
             <selo>
-                <tipoSelo>46</tipoSelo>
-                <numeroSerie>AAA64452</numeroSerie>
+                <tipoSelo>47</tipoSelo>
+                <numeroSerie>AAA39168</numeroSerie>
+                <validador>5Q2P</validador>
             </selo>
             <retificador>false</retificador>
             <solicitante>
@@ -31,92 +24,41 @@
                 <tipoPessoa>Física</tipoPessoa>
                 <documento>
                     <tipoDocumento>8</tipoDocumento>
-                    <numero>04925615000</numero>
+                    <numero>77497892002</numero>
                 </documento>
             </solicitante>
-            <signatario>
-                <nomePessoa>PEDRO SEVERO GOMES</nomePessoa>
+            <SubTipoAto>124</SubTipoAto>
+            <ValidadeAto>N/A</ValidadeAto>
+            <Protocolo>54/2023</Protocolo>
+            <Partes>
+                <nomePessoa>NÃO INFORMADO</nomePessoa>
                 <tipoPessoa>Física</tipoPessoa>
                 <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>02573620450</numero>
+                    <tipoDocumento>23</tipoDocumento>
+                    <numero>NÃO INFORMADO</numero>
                 </documento>
-            </signatario>
-            <descricaoDocto>2</descricaoDocto>
-            <tipoReconhecimento>82</tipoReconhecimento>
-            
+            </Partes>
+            <Registro>
+                <codigoLivro>1</codigoLivro>
+                <paginaInicial>48</paginaInicial>
+                <paginaFinal>48</paginaFinal>
+                <dataRegistro>2023-04-01-03:00</dataRegistro>
+            </Registro>
+            <ObjetoNegocio>
+                <tipoObjeto>Escritura sem valor declarado</tipoObjeto>
+                <especificacao>TRATA-SE de Escritura Pública de Compra e Venda...</especificacao>
+                <caracteristicas></caracteristicas>
+                <valorObjeto>0</valorObjeto>
+            </ObjetoNegocio>
         </ato>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>00.00</valor>
-            <quantidade>1</quantidade>
-            <id_tipo_emolumento>73</id_tipo_emolumento>
-            <id_emolumento>123</id_emolumento>
-            <id_desconto>0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
-
-        
-        
-        <ato xsi:type="ns2:ReconhecimentoFirma">
-            <idAto>1</idAto>
-            <codigoServentia>30</codigoServentia>
-            <dataAto>2025-02-20T14:25:10.123-03:00</dataAto>
-            <tipoAto>20</tipoAto>
-            <valorEmolumento>00.00</valorEmolumento>
-            <valorAto>25.75</valorAto>
-            <responsavel>30</responsavel>
-            <id_imposto>15</id_imposto>
-            <idAtos>1</idAtos>
-            <selo>
-                <tipoSelo>50</tipoSelo>
-                <numeroSerie>BBB12345</numeroSerie>
-            </selo>
-            <retificador>true</retificador>
-            <solicitante>
-                <nomePessoa>Maria Oliveira</nomePessoa>
-                <tipoPessoa>Jurídica</tipoPessoa>
-                <documento>
-                    <tipoDocumento>10</tipoDocumento>
-                    <numero>12345678000199</numero>
-                </documento>
-            </solicitante>
-            <signatario>
-                <nomePessoa>Carlos Silva</nomePessoa>
-                <tipoPessoa>Física</tipoPessoa>
-                <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>98765432100</numero>
-                </documento>
-            </signatario>
-            <descricaoDocto>3</descricaoDocto>
-            <tipoReconhecimento>82</tipoReconhecimento>
-            
-        </ato>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>00.00</valor>
-            <quantidade>1</quantidade>
-            <id_tipo_emolumento>73</id_tipo_emolumento>
-            <id_emolumento>123</id_emolumento>
-            <id_desconto>0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
-
-        
-        
     </atos>
     <atosEmolumento>
-        
-        <atoEmolumento>
-            <id>0</id>
-            <valor>00.00</valor>
-            <quantidade>1</quantidade>
-            <id_tipo_emolumento>73</id_tipo_emolumento>
-            <id_emolumento>123</id_emolumento>
-            <id_desconto>0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
-        
+        <id>0</id>
+        <valor>0</valor>
+        <quantidade>1</quantidade>
+        <id_tipo_emolumento>92</id_tipo_emolumento>
+        <id_emolumento>853</id_emolumento>
+        <id_desconto>0</id_desconto>
+        <id_ato>0</id_ato>
     </atosEmolumento>
 </ns2:messageAtos>

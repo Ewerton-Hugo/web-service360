@@ -8,8 +8,13 @@ const { upload } = require('../config/multer');
 
 routes.post('/resdisponibilizar_Ultima_Transmissao', apiController.ResdisponibilizarUltimaTransmissao);
 routes.post('/fornecer_Selos', apiController.FornecerSelos);
-routes.post('/enviar_atos', apiController.enviarAtos);
-routes.post('/atos_reconhecimento_firma', apiController.ReconhecimentoFirma);
+routes.post('/enviar/registro_titulos_doc_pJ', apiController.registroTitulosDocPJ);
+routes.post('/enviar/registro_imoveis', apiController.registroImoveis);//erro
+routes.post('/enviar/nascimento', apiController.nascimento);//DeuCerto
+routes.post('/enviar/nota_generica', apiController.notaGenerica);//DeuCerto
+routes.post('/enviar/nota_escrituraria', apiController.notaEscrituraria);//DeuCerto
+
+routes.post('/enviaratos_reconhecimento_firma', apiController.ReconhecimentoFirma);
 
 routes.post('/verifica_transmissao',apiController.VerificaTransmissao);
 routes.post('/emolumento_transmissao',apiController.EmolumentoTransmissao);

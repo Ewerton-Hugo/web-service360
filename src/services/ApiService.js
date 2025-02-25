@@ -4,9 +4,18 @@ const path = require('path');
 const mime = require('mime-types');
 const FormData = require('form-data');
 const {setAto} = require('../providers/SetAto')
-const {SetReconhecimentoFirma} = require('../providers/SetReconhecimentoFirma')
+const {SetRegistroImovel} = require('../providers/SetRegistroImovel')
+const { SetNascimento } = require('../providers/SetNascimento')
+const { SetNotaGenerica } = require('../providers/SetNotaGenerica')
+const { SetNotasEscrituratias } = require('../providers/SetNotasEscrituratias')
 
-const {xmlToJson, jsonToXml} = require('../providers/XmlToJson')
+const {SetReconhecimentoFirma} = require('../providers/SetReconhecimentoFirma')
+const { DOMParser } = require('xmldom');
+const {xmlToJson, extrairSelos,extractMultipartData,extrairRedisponibilix} = require('../providers/XmlToJson');
+const e = require('cors');
+
+const arquivoPath = path.join(__dirname, '..','XML', 'temp.xml');
+
 
 class ApiService {
 
@@ -35,8 +44,11 @@ class ApiService {
                 }
             );
             
+            const data ={
+                response: `Total de selos redisponibvlizados: ${extrairRedisponibilix(response.data)} `,
+            }
 
-        return response.data;
+        return data;
 
 
     }
@@ -68,8 +80,8 @@ class ApiService {
                 }
             );
 
-
-            return response.data;        
+            // return response.data;        
+            return extrairSelos(response.data);
 
     }
 
@@ -175,8 +187,7 @@ class ApiService {
 
 
     
-
-    async enviarAtos(user, pass, xmlData) {
+    async registroTitulosDocPJ(user, pass, xmlData) {
         const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
         // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";
 
@@ -244,7 +255,282 @@ class ApiService {
             throw error;
         }
     }
+
+    async registroImoveis(user, pass, xmlData) {
+        // const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
+        // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";
+
+        const boundary = "MIME_BOUNDARY";
+        const fileCid = "arquivo-binario"; // CID que será referenciado no XML
+        const xmlString = SetRegistroImovel(xmlData);
+        fs.writeFileSync(arquivoPath, xmlString);
+
+
+        const fileStream = fs.readFileSync(arquivoPath);
+        const fileName = path.basename(arquivoPath);
+        // 1️⃣ Construção do envelope SOAP como uma string normal (sem Buffer)
+        const soapEnvelope = `--${boundary}\r\n` +
+            `Content-Type: application/xop+xml; charset=UTF-8; type="text/xml"\r\n` +
+            `Content-Transfer-Encoding: 8bit\r\n` +
+            `Content-ID: <soapMessage>\r\n\r\n` +
+            `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                              xmlns:selo="http://www.tjal.jus.br/selo"
+                              xmlns:xop="http://www.w3.org/2004/08/xop/include">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <selo:enviarAtos>
+                        <user>${user}</user>
+                        <pass>${pass}</pass>
+                        <arquivo>
+                            <xop:Include href="cid:${fileCid}"/> 
+                        </arquivo>
+                    </selo:enviarAtos>
+                </soapenv:Body>
+            </soapenv:Envelope>\r\n`;
     
+        // 2️⃣ Construção dos cabeçalhos do arquivo
+        const fileHeader = `--${boundary}\r\n` +
+            `Content-Type: application/xml\r\n` +
+            `Content-Transfer-Encoding: binary\r\n` +
+            `Content-ID: <${fileCid}>\r\n` +
+            `Content-Disposition: attachment; name="${fileName}"; filename="${fileName}"\r\n\r\n`;
+    
+        // 3️⃣ Construção do corpo final, sem transformar tudo em Buffer
+        const requestBody = soapEnvelope + fileHeader; // Parte textual  
+        const bodyBuffer = Buffer.concat([
+            Buffer.from(requestBody, "utf-8"), // Texto como UTF-8  
+            fileStream, // Arquivo binário
+            Buffer.from(`\r\n--${boundary}--\r\n`, "utf-8") // Fechamento do MIME  
+        ]);
+        try {
+            // 4️⃣ Envio da requisição SOAP  
+            const response = await axios.post(
+                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
+                bodyBuffer,
+                {
+                    headers: {
+                        "Content-Type": `multipart/related; type="application/xop+xml"; boundary="${boundary}"`,
+                        "SOAPAction": ""
+                    },
+                }
+            );
+            return response.data
+    
+        } catch (error) {
+            console.error(
+                "Erro na requisição:",
+                error.response ? error.response.data : error.message
+            );
+            throw error;
+        }
+    }
+    async nascimento(user, pass, xmlData) {
+        // const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
+        // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";
+
+        const boundary = "MIME_BOUNDARY";
+        const fileCid = "arquivo-binario"; // CID que será referenciado no XML
+        const xmlString = SetNascimento(xmlData);
+        fs.writeFileSync(arquivoPath, xmlString);
+
+
+        const fileStream = fs.readFileSync(arquivoPath);
+        const fileName = path.basename(arquivoPath);
+        // 1️⃣ Construção do envelope SOAP como uma string normal (sem Buffer)
+        const soapEnvelope = `--${boundary}\r\n` +
+            `Content-Type: application/xop+xml; charset=UTF-8; type="text/xml"\r\n` +
+            `Content-Transfer-Encoding: 8bit\r\n` +
+            `Content-ID: <soapMessage>\r\n\r\n` +
+            `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                              xmlns:selo="http://www.tjal.jus.br/selo"
+                              xmlns:xop="http://www.w3.org/2004/08/xop/include">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <selo:enviarAtos>
+                        <user>${user}</user>
+                        <pass>${pass}</pass>
+                        <arquivo>
+                            <xop:Include href="cid:${fileCid}"/> 
+                        </arquivo>
+                    </selo:enviarAtos>
+                </soapenv:Body>
+            </soapenv:Envelope>\r\n`;
+    
+        // 2️⃣ Construção dos cabeçalhos do arquivo
+        const fileHeader = `--${boundary}\r\n` +
+            `Content-Type: application/xml\r\n` +
+            `Content-Transfer-Encoding: binary\r\n` +
+            `Content-ID: <${fileCid}>\r\n` +
+            `Content-Disposition: attachment; name="${fileName}"; filename="${fileName}"\r\n\r\n`;
+    
+        // 3️⃣ Construção do corpo final, sem transformar tudo em Buffer
+        const requestBody = soapEnvelope + fileHeader; // Parte textual  
+        const bodyBuffer = Buffer.concat([
+            Buffer.from(requestBody, "utf-8"), // Texto como UTF-8  
+            fileStream, // Arquivo binário
+            Buffer.from(`\r\n--${boundary}--\r\n`, "utf-8") // Fechamento do MIME  
+        ]);
+        try {
+            // 4️⃣ Envio da requisição SOAP  
+            const response = await axios.post(
+                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
+                bodyBuffer,
+                {
+                    headers: {
+                        "Content-Type": `multipart/related; type="application/xop+xml"; boundary="${boundary}"`,
+                        "SOAPAction": ""
+                    },
+                }
+            );
+            return response.data
+    
+        } catch (error) {
+            console.error(
+                "Erro na requisição:",
+                error.response ? error.response.data : error.message
+            );
+            throw error;
+        }
+    }
+
+    async notaGenerica(user, pass, xmlData) {
+        // const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
+        // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";
+
+        const boundary = "MIME_BOUNDARY";
+        const fileCid = "arquivo-binario"; // CID que será referenciado no XML
+        const xmlString = SetNotaGenerica(xmlData);
+        fs.writeFileSync(arquivoPath, xmlString);
+
+
+        const fileStream = fs.readFileSync(arquivoPath);
+        const fileName = path.basename(arquivoPath);
+        // 1️⃣ Construção do envelope SOAP como uma string normal (sem Buffer)
+        const soapEnvelope = `--${boundary}\r\n` +
+            `Content-Type: application/xop+xml; charset=UTF-8; type="text/xml"\r\n` +
+            `Content-Transfer-Encoding: 8bit\r\n` +
+            `Content-ID: <soapMessage>\r\n\r\n` +
+            `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                              xmlns:selo="http://www.tjal.jus.br/selo"
+                              xmlns:xop="http://www.w3.org/2004/08/xop/include">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <selo:enviarAtos>
+                        <user>${user}</user>
+                        <pass>${pass}</pass>
+                        <arquivo>
+                            <xop:Include href="cid:${fileCid}"/> 
+                        </arquivo>
+                    </selo:enviarAtos>
+                </soapenv:Body>
+            </soapenv:Envelope>\r\n`;
+    
+        // 2️⃣ Construção dos cabeçalhos do arquivo
+        const fileHeader = `--${boundary}\r\n` +
+            `Content-Type: application/xml\r\n` +
+            `Content-Transfer-Encoding: binary\r\n` +
+            `Content-ID: <${fileCid}>\r\n` +
+            `Content-Disposition: attachment; name="${fileName}"; filename="${fileName}"\r\n\r\n`;
+    
+        // 3️⃣ Construção do corpo final, sem transformar tudo em Buffer
+        const requestBody = soapEnvelope + fileHeader; // Parte textual  
+        const bodyBuffer = Buffer.concat([
+            Buffer.from(requestBody, "utf-8"), // Texto como UTF-8  
+            fileStream, // Arquivo binário
+            Buffer.from(`\r\n--${boundary}--\r\n`, "utf-8") // Fechamento do MIME  
+        ]);
+        try {
+            // 4️⃣ Envio da requisição SOAP  
+            const response = await axios.post(
+                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
+                bodyBuffer,
+                {
+                    headers: {
+                        "Content-Type": `multipart/related; type="application/xop+xml"; boundary="${boundary}"`,
+                        "SOAPAction": ""
+                    },
+                }
+            );
+            return response.data
+    
+        } catch (error) {
+            console.error(
+                "Erro na requisição:",
+                error.response ? error.response.data : error.message
+            );
+            throw error;
+        }
+    }
+
+
+    async notaEscrituraria(user, pass, xmlData) {
+        // const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
+        // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";
+
+        const boundary = "MIME_BOUNDARY";
+        const fileCid = "arquivo-binario"; // CID que será referenciado no XML
+        const xmlString = SetNotasEscrituratias(xmlData);
+        fs.writeFileSync(arquivoPath, xmlString);
+
+
+        const fileStream = fs.readFileSync(arquivoPath);
+        const fileName = path.basename(arquivoPath);
+        // 1️⃣ Construção do envelope SOAP como uma string normal (sem Buffer)
+        const soapEnvelope = `--${boundary}\r\n` +
+            `Content-Type: application/xop+xml; charset=UTF-8; type="text/xml"\r\n` +
+            `Content-Transfer-Encoding: 8bit\r\n` +
+            `Content-ID: <soapMessage>\r\n\r\n` +
+            `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                              xmlns:selo="http://www.tjal.jus.br/selo"
+                              xmlns:xop="http://www.w3.org/2004/08/xop/include">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <selo:enviarAtos>
+                        <user>${user}</user>
+                        <pass>${pass}</pass>
+                        <arquivo>
+                            <xop:Include href="cid:${fileCid}"/> 
+                        </arquivo>
+                    </selo:enviarAtos>
+                </soapenv:Body>
+            </soapenv:Envelope>\r\n`;
+    
+        // 2️⃣ Construção dos cabeçalhos do arquivo
+        const fileHeader = `--${boundary}\r\n` +
+            `Content-Type: application/xml\r\n` +
+            `Content-Transfer-Encoding: binary\r\n` +
+            `Content-ID: <${fileCid}>\r\n` +
+            `Content-Disposition: attachment; name="${fileName}"; filename="${fileName}"\r\n\r\n`;
+    
+        // 3️⃣ Construção do corpo final, sem transformar tudo em Buffer
+        const requestBody = soapEnvelope + fileHeader; // Parte textual  
+        const bodyBuffer = Buffer.concat([
+            Buffer.from(requestBody, "utf-8"), // Texto como UTF-8  
+            fileStream, // Arquivo binário
+            Buffer.from(`\r\n--${boundary}--\r\n`, "utf-8") // Fechamento do MIME  
+        ]);
+        try {
+            // 4️⃣ Envio da requisição SOAP  
+            const response = await axios.post(
+                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
+                bodyBuffer,
+                {
+                    headers: {
+                        "Content-Type": `multipart/related; type="application/xop+xml"; boundary="${boundary}"`,
+                        "SOAPAction": ""
+                    },
+                }
+            );
+            return response.data
+    
+        } catch (error) {
+            console.error(
+                "Erro na requisição:",
+                error.response ? error.response.data : error.message
+            );
+            throw error;
+        }
+    }
     async ReconhecimentoFirma(user, pass, xmlData) {
         const arquivoPath = "/home/ewerto/Documentos/Projetos/cartorio360-web-service/src/XML/temp.xml";
         // const arquivoPath = "/media/pwdev/Novo volume/cartorio360-web-service/src/XML/temp.xml";

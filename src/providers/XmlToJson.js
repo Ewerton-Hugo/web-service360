@@ -1,5 +1,6 @@
 const xml2js = require('xml2js');
-
+const { XMLParser } = require('fast-xml-parser');
+const { DOMParser } = require('xmldom');
 async function xmlToJson(xml) {
   const parser = new xml2js.Parser({ explicitArray: false });
   
@@ -87,8 +88,50 @@ function extractBoundaryFromResponse(response) {
   return boundaryMatch ? boundaryMatch[1] : null;
 }
 
+
+function extrairSelos(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+    const selosNodeList = xmlDoc.getElementsByTagName('selo');
+    const selosArray = [];
+
+    for (let i = 0; i < selosNodeList.length; i++) {
+        const selo = selosNodeList[i];
+        
+        const tipoSelo = selo.getElementsByTagName('tipoSelo')[0]?.textContent || '';
+        const numeroSerie = selo.getElementsByTagName('numeroSerie')[0]?.textContent || '';
+        const validador = selo.getElementsByTagName('validador')[0]?.textContent || '';
+        const nuCartorio = selo.getElementsByTagName('nuCartorio')[0]?.textContent || '';
+
+        selosArray.push({
+            tipoSelo,
+            numeroSerie,
+            validador,
+            nuCartorio
+        });
+    }
+
+    return { selos: selosArray };
+}
+
+function extrairRedisponibilix(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+    const selosNodeList = xmlDoc.getElementsByTagName('numeroSelosLiberados');
+
+    return selosNodeList[0].textContent;
+  
+}
+
+
+
+
 module.exports = {
   xmlToJson,
   jsonToXml,
-  extractMultipartData
+  extractMultipartData,
+  extrairSelos,
+  extrairRedisponibilix
 };
