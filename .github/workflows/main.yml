@@ -70,9 +70,9 @@ jobs:
 
           script: |
             cd /var/www/html/cartorio360/public_html/producao/web_service_360
-            # npm install
+            npm install
             npm run pm2-stop
-            # npm run pm2
+            npm run pm2
             # docker compose build --no-cache app
             # docker compose up -d app
       - name: Debug    
