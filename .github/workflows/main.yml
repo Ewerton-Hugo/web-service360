@@ -27,7 +27,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           source: "**"
-          target: "/var/www/html/cartorio360/public_html/producao/cartorio360-back"
+          target: "/var/www/html/cartorio360/public_html/producao/web_service_360"
           rm: true
           
           
@@ -41,7 +41,7 @@ jobs:
           port: 22
 
           script: |
-            cd /var/www/html/cartorio360/public_html/producao/cartorio360-back
+            cd /var/www/html/cartorio360/public_html/producao/web_service_360
             touch .env
             
             echo "MS_MANAGEMENT_PORT=${{secrets.MS_MANAGEMENT_PORT}}" | tee -a .env
@@ -69,7 +69,7 @@ jobs:
           port: 22
 
           script: |
-            cd /var/www/html/cartorio360/public_html/producao/cartorio360-back
+            cd /var/www/html/cartorio360/public_html/producao/web_service_360
             # npm install
             npm run pm2-stop
             # npm run pm2
