@@ -49,7 +49,8 @@ jobs:
             echo "TJ_PRODUCTION=${{secrets.TJ_PRODUCTION}}" | tee -a .env
             echo "TJ_DESENV=${{secrets.TJ_DESENV}}" | tee -a .env
             echo "NODE_ENV=${{secrets.NODE_ENV}}" | tee -a .env
-
+            echo "SSLCertificateKeyFile: ${{secrets.SSLCertificateKeyFile}}" | tee -a .env
+            echo "SSLCertificateFile: ${{secrets.SSLCertificateFile}}" | tee -a .env
             echo "PROJECT: ${{secrets.PROJECT}}" | tee -a .env
 
       - name: Subindo servidor pm2
