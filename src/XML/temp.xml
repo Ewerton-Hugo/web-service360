@@ -1,64 +1,94 @@
-
-<ns2:messageAtos version="3.0" numeroSelo="AAA39168" xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" numeroSeloAnterior="" flDut="false">
+<?xml version="1.0"?>
+<ns2:messageAtos version="3.0" numeroSelo="AAA38743" xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" numeroSeloAnterior="" flDut="false">
     <messageID>0</messageID>
     <messageDate>2023-10-04T00:00:00.000-03:00</messageDate>
     <codigoServentia>12</codigoServentia>
     <atos>
-        <ato xsi:type="ns2:NotasEscrituras" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ato xsi:type="ns2:NotasGenerico" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <idAto>0</idAto>
             <codigoServentia>1</codigoServentia>
-            <dataAto>2023-05-17T00:00:00.000-03:00</dataAto>
-            <tipoAto>2</tipoAto>
-            <valorEmolumento>0</valorEmolumento>
-            <valorAto>28.86</valorAto>
+            <dataAto>2022-10-27T00:00:00.000-03:00</dataAto>
+            <tipoAto>3</tipoAto>
+            <valorEmolumento>22.43</valorEmolumento>
+            <valorAto>51.29</valorAto>
             <responsavel>1</responsavel>
             <idAtos>0</idAtos>
             <selo>
                 <tipoSelo>47</tipoSelo>
-                <numeroSerie>AAA39168</numeroSerie>
-                <validador>5Q2P</validador>
+                <numeroSerie>AAA66665</numeroSerie>
+                <validador>BKQO</validador>
             </selo>
             <retificador>false</retificador>
             <solicitante>
-                <nomePessoa>teste</nomePessoa>
+                <nomePessoa>MARIA BERNADETE DOS SANTOS</nomePessoa>
                 <tipoPessoa>Física</tipoPessoa>
                 <documento>
                     <tipoDocumento>8</tipoDocumento>
-                    <numero>77497892002</numero>
+                    <numero>59421274415</numero>
                 </documento>
             </solicitante>
-            <SubTipoAto>124</SubTipoAto>
+            <SubTipoAto>42</SubTipoAto>
             <ValidadeAto>N/A</ValidadeAto>
-            <Protocolo>54/2023</Protocolo>
+            <Protocolo>47/2022</Protocolo>
+            
             <Partes>
-                <nomePessoa>NÃO INFORMADO</nomePessoa>
+                <nomePessoa>MARIA BERNADETE DOS SANTOS</nomePessoa>
                 <tipoPessoa>Física</tipoPessoa>
                 <documento>
-                    <tipoDocumento>23</tipoDocumento>
-                    <numero>NÃO INFORMADO</numero>
+                    <tipoDocumento>8</tipoDocumento>
+                    <numero>59421274415</numero>
                 </documento>
             </Partes>
+            
+            <Partes>
+                <nomePessoa>ZENILDA PROCOPIO DOS SANTOS</nomePessoa>
+                <tipoPessoa>Física</tipoPessoa>
+                <documento>
+                    <tipoDocumento>8</tipoDocumento>
+                    <numero>04604343497</numero>
+                </documento>
+            </Partes>
+            
+            <Partes>
+                <nomePessoa>JOSÉ OLIVEIRA DA SILVA</nomePessoa>
+                <tipoPessoa>Física</tipoPessoa>
+                <documento>
+                    <tipoDocumento>8</tipoDocumento>
+                    <numero>08626573421</numero>
+                </documento>
+            </Partes>
+            
             <Registro>
-                <codigoLivro>1</codigoLivro>
-                <paginaInicial>48</paginaInicial>
-                <paginaFinal>48</paginaFinal>
-                <dataRegistro>2023-04-01-03:00</dataRegistro>
+                <codigoLivro>13</codigoLivro>
+                <paginaInicial>152</paginaInicial>
+                <paginaFinal>152</paginaFinal>
+                <dataRegistro>2022-10-27-03:00</dataRegistro>
             </Registro>
-            <ObjetoNegocio>
-                <tipoObjeto>Escritura sem valor declarado</tipoObjeto>
-                <especificacao>TRATA-SE de Escritura Pública de Compra e Venda...</especificacao>
-                <caracteristicas></caracteristicas>
-                <valorObjeto>0</valorObjeto>
-            </ObjetoNegocio>
+            <ClausulaGeral>S A I B A M quantos este Público Instrumento de Procuração, subscxxxxxxxxxxxxxxxxxxxxxxxxx</ClausulaGeral>
         </ato>
+        
+        <atoEmolumento>
+            <id>0</id>
+            <valor>22.43</valor>
+            <quantidade>1</quantidade>
+            <id_tipo_emolumento>79</id_tipo_emolumento>
+            <id_emolumento>64</id_emolumento>
+            <id_desconto>0</id_desconto>
+            <id_ato>0</id_ato>
+            <id_ato_multiplo>0</id_ato_multiplo>
+        </atoEmolumento>
     </atos>
     <atosEmolumento>
-        <id>0</id>
-        <valor>0</valor>
-        <quantidade>1</quantidade>
-        <id_tipo_emolumento>92</id_tipo_emolumento>
-        <id_emolumento>853</id_emolumento>
-        <id_desconto>0</id_desconto>
-        <id_ato>0</id_ato>
+        
+        <atoEmolumento>
+            <id>0</id>
+            <valor>22.43</valor>
+            <quantidade>1</quantidade>
+            <id_tipo_emolumento>79</id_tipo_emolumento>
+            <id_emolumento>64</id_emolumento>
+            <id_desconto>0</id_desconto>
+            <id_ato>0</id_ato>
+            <id_ato_multiplo>0</id_ato_multiplo>
+        </atoEmolumento>
     </atosEmolumento>
 </ns2:messageAtos>

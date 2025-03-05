@@ -1,18 +1,27 @@
 const xml2js = require('xml2js');
 const { XMLParser } = require('fast-xml-parser');
 const { DOMParser } = require('xmldom');
-async function xmlToJson(xml) {
-  const parser = new xml2js.Parser({ explicitArray: false });
+async function xmlToJson(xmlString,tagName = null ) {
+    if(tagName){
+        console.log('tagName',tagName)
+        const data = extrairMEnsagemSimples(xmlString,tagName)
+        console.log('data',data)
+        const parser = new xml2js.Parser({ explicitArray: false });
   
-  try {
-      const result = await parser.parseStringPromise(xml);
+        const result = await parser.parseStringPromise(data);
+        return result;
 
-      
-      return result;
-  } catch (error) {
-      console.error("Erro ao converter XML para JSON:", error);
-      return null;
-  }
+    }
+    else{ 
+        const parser = new xml2js.Parser({ explicitArray: false });
+  
+        const result = await parser.parseStringPromise(xmlString);
+        return result;
+    }
+
+
+    
+
 }
 
 async function jsonToXml(json) {
@@ -115,16 +124,56 @@ function extrairSelos(xmlString) {
     return { selos: selosArray };
 }
 
-function extrairRedisponibilix(xmlString) {
+function    extrairMEnsagemSimples(xmlString,tagName) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
 
-    const selosNodeList = xmlDoc.getElementsByTagName('numeroSelosLiberados');
+    const selosNodeList = xmlDoc.getElementsByTagName(tagName);
 
     return selosNodeList[0].textContent;
   
 }
 
+
+async function extrairMensageSucesso(xmlString) {
+    // Sua string XML
+
+    // 1. Separar as partes do Multipart
+    const partes = xmlString.split("--uuid:b0bfcd80-7015-4a9b-9777-d41507579bf7");
+    const documentoProtocoloParte = partes.find(parte => parte.includes("<documentoProtocolo>"));
+
+    if (!documentoProtocoloParte) {
+        console.error("documentoProtocolo não encontrado.");
+        return null; // Retorna null caso não encontre o XML do documentoProtocolo
+    }
+
+    // 2. Remover cabeçalhos desnecessários e pegar só o XML do documentoProtocolo
+    const xmlMatch = documentoProtocoloParte.match(/<documentoProtocolo[\s\S]*<\/documentoProtocolo>/);
+    if (!xmlMatch) {
+        console.error("XML do documentoProtocolo não encontrado.");
+        return null; // Retorna null caso o XML não seja encontrado
+    }
+
+    const xmlDocumentoProtocolo = xmlMatch[0];
+
+    // 3. Converter XML para JSON de forma assíncrona usando Promise
+    const options = {
+        explicitArray: false, // Evita arrays para elementos únicos
+        ignoreAttrs: false, // Mantém os atributos no XML
+        mergeAttrs: true // Mescla atributos em elementos
+    };
+
+    return new Promise((resolve, reject) => {
+        xml2js.parseString(xmlDocumentoProtocolo, options, (err, result) => {
+            if (err) {
+                console.error("Erro ao converter XML para JSON:", err);
+                reject("Erro ao converter XML para JSON");
+            } else {
+                resolve(result.documentoProtocolo); // Resolve a promise com o resultado
+            }
+        });
+    });
+}
 
 
 
@@ -133,5 +182,6 @@ module.exports = {
   jsonToXml,
   extractMultipartData,
   extrairSelos,
-  extrairRedisponibilix
+  extrairMEnsagemSimples,
+  extrairMensageSucesso
 };

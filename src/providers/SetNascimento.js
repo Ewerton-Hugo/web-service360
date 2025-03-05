@@ -1,4 +1,8 @@
+const { SetEmolumento} = require('./SetEmolumento')
+
 function SetNascimento(data) {
+    const emolumento = SetEmolumento(data.atosEmolumento)
+
     console.log(data);
     const date = new Date();
     const offset = -3;
@@ -67,32 +71,12 @@ function SetNascimento(data) {
             </Registro>
             <ClausulaGeral>${data.ato.ClausulaGeral ?? 'TESTE'}</ClausulaGeral>
         </ato>
-        ${data.atoEmolumentos.map(emolumento => `
-        <atoEmolumento>
-            <id>${emolumento.id ?? 0}</id>
-            <valor>${emolumento.valor ?? 4.3}</valor>
-            <quantidade>${emolumento.quantidade ?? 1}</quantidade>
-            <id_tipo_emolumento>${emolumento.id_tipo_emolumento ?? 61}</id_tipo_emolumento>
-            <id_emolumento>${emolumento.id_emolumento ?? 88}</id_emolumento>
-            <id_desconto>${emolumento.id_desconto ?? 0}</id_desconto>
-            <id_ato>${emolumento.id_ato ?? 0}</id_ato>
-            <id_ato_multiplo>${emolumento.id_ato_multiplo ?? 0}</id_ato_multiplo>
-        </atoEmolumento>
-        `).join('')}
+        ${emolumento}
+
     </atos>
     <atosEmolumento>
-        ${data.atosEmolumento.map(emolumento => `
-        <atoEmolumento>
-            <id>${emolumento.id ?? 0}</id>
-            <valor>${emolumento.valor ?? 4.3}</valor>
-            <quantidade>${emolumento.quantidade ?? 1}</quantidade>
-            <id_tipo_emolumento>${emolumento.id_tipo_emolumento ?? 61}</id_tipo_emolumento>
-            <id_emolumento>${emolumento.id_emolumento ?? 88}</id_emolumento>
-            <id_desconto>${emolumento.id_desconto ?? 0}</id_desconto>
-            <id_ato>${emolumento.id_ato ?? 0}</id_ato>
-            <id_ato_multiplo>${emolumento.id_ato_multiplo ?? 0}</id_ato_multiplo>
-        </atoEmolumento>
-        `).join('')}
+        ${emolumento}
+
     </atosEmolumento>
 </ns2:messageAtos>`;
 

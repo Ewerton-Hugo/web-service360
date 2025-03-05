@@ -1,6 +1,9 @@
 const { Console } = require("winston/lib/winston/transports");
+const { SetEmolumento} = require('./SetEmolumento')
 
 function SetRegistroImovel(data) {
+    const emolumento = SetEmolumento(data.atosEmolumento)
+
     const date = new Date();
     const offset = -3; 
     const localISO = new Date(date.getTime() + offset * 60 * 60 * 1000)
@@ -38,26 +41,11 @@ function SetRegistroImovel(data) {
             </Registro>
             <ClausulaGeral>${data.ato.clausulaGeral}</ClausulaGeral>
         </ato>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>${data.atoEmolumento[0].valor}</valor>
-            <quantidade>${data.atoEmolumento[0].quantidade}</quantidade>
-            <id_tipo_emolumento>${data.atoEmolumento[0].id_tipo_emolumento ?? 73}</id_tipo_emolumento>
-            <id_emolumento>${data.atoEmolumento[0].id_emolumento}123</id_emolumento>
-            <id_desconto>${data.atoEmolumento[0].id_desconto ?? 0}0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
+        ${emolumento}
+
     </atos>
     <atosEmolumento>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>${data.atoEmolumento[0].valor}</valor>
-            <quantidade>${data.atoEmolumento[0].quantidade}</quantidade>
-            <id_tipo_emolumento>${data.atoEmolumento[0].id_tipo_emolumento ?? 73}</id_tipo_emolumento>
-            <id_emolumento>${data.atoEmolumento[0].id_emolumento ?? 123}</id_emolumento>
-            <id_desconto>${data.atoEmolumento[0].id_desconto ?? 0}0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
+        ${emolumento}
     </atosEmolumento>
 </ns2:messageAtos>`;
 

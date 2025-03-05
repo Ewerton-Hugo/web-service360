@@ -1,6 +1,7 @@
 const { Console } = require("winston/lib/winston/transports");
-
+const { SetEmolumento} = require('./SetEmolumento');
 function setAto(data) {
+    const emolumento = SetEmolumento(data.atosEmolumento)
     const date = new Date();
     const offset = -3; 
     const localISO = new Date(date.getTime() + offset * 60 * 60 * 1000)
@@ -24,9 +25,9 @@ function setAto(data) {
             <id_imposto>12</id_imposto>
             <idAtos>0</idAtos>
             <selo>
-                <tipoSelo>${data.tipoSelo}</tipoSelo>
-                <numeroSerie>${data.numeroSerie}</numeroSerie>
-                <validador>${data.validador}</validador>
+                <tipoSelo>${data.selo.tipoSelo}</tipoSelo>
+                <numeroSerie>${data.selo.numeroSerie}</numeroSerie>
+                <validador>${data.selo.validador}</validador>
             </selo>
             <retificador>false</retificador>
             <Recolhimentos>
@@ -49,26 +50,10 @@ function setAto(data) {
             </Registro>
             <ClausulaGeral>1</ClausulaGeral>
         </ato>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>${data.atoEmolumento[0].valor}</valor>
-            <quantidade>${data.atoEmolumento[0].quantidade}</quantidade>
-            <id_tipo_emolumento>${data.atoEmolumento[0].id_tipo_emolumento ?? 73}</id_tipo_emolumento>
-            <id_emolumento>${data.atoEmolumento[0].id_emolumento}123</id_emolumento>
-            <id_desconto>${data.atoEmolumento[0].id_desconto ?? 0}0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
-    </atos>
+        ${emolumento}
+    </atos> 
     <atosEmolumento>
-        <atoEmolumento>
-            <id>0</id>
-            <valor>${data.atoEmolumento[0].valor}</valor>
-            <quantidade>${data.atoEmolumento[0].quantidade}</quantidade>
-            <id_tipo_emolumento>${data.atoEmolumento[0].id_tipo_emolumento ?? 73}</id_tipo_emolumento>
-            <id_emolumento>${data.atoEmolumento[0].id_emolumento ?? 123}</id_emolumento>
-            <id_desconto>${data.atoEmolumento[0].id_desconto ?? 0}0</id_desconto>
-            <id_ato>0</id_ato>
-        </atoEmolumento>
+        ${emolumento}
     </atosEmolumento>
 </ns2:messageAtos>`;
 

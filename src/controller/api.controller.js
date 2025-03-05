@@ -4,7 +4,7 @@
 const {ApiService} = require('../services/ApiService')
 const {logger} = require('../config/logger')
 const fs = require('fs');
-const {xmlToJson, jsonToXml} = require('../providers/XmlToJson')
+const {extrairMensageSucesso, jsonToXml,extrairMEnsagemSimples} = require('../providers/XmlToJson')
 
 const apiService =  new ApiService();
 
@@ -13,11 +13,11 @@ class ApiController{
     async ResdisponibilizarUltimaTransmissao(req, res) {
         const jsonData = req.body;
         try {
-            const result = await apiService.resdisponibilizarUltimaTransmissao(jsonData.user, jsonData.pass);
+            var result = await apiService.resdisponibilizarUltimaTransmissao(jsonData.user, jsonData.pass);
             
             logger.warn("Executando consultarSelos:", result);
             
-            res.status(200).send(result);    
+            res.status(200).json(result);        
         } catch (error) {
             console.error(error); // Exibe o erro completo no console
         
@@ -34,7 +34,8 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const details = extrairMEnsagemSimples( error.response.cleardata, 'faultstring')
+            res.status(statusCode).json( error);        
         }
     }
     
@@ -82,7 +83,8 @@ class ApiController{
                 details = { stack: error.stack };
             }
     
-            res.status(statusCode).json({ error: message, details });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     }
     
@@ -109,7 +111,8 @@ class ApiController{
               message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
           }
 
-          res.status(statusCode).json({ error: message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
     
         }
     }
@@ -137,7 +140,8 @@ class ApiController{
               message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
           }
 
-          res.status(statusCode).json({ error: message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
     
         }
     }
@@ -166,15 +170,17 @@ class ApiController{
               message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
           }
 
-          res.status(statusCode).json({ error: message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
     
         }
     }
     async registroTitulosDocPJ(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.registroTitulosDocPJ(user, pass, xmlData);
+            var result = await apiService.registroTitulosDocPJ(user, pass, xmlData);
 
+            result = await extrairMensageSucesso(result)
             res.status(200).json(result);
         } catch (error) {
             console.error(error); 
@@ -192,18 +198,18 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
-        }
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });               }
     };
 
     
     async registroImoveis(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.registroImoveis(user, pass, xmlData);
+            var result = await apiService.registroImoveis(user, pass, xmlData);
 
-            res.status(200).json(result);
-        } catch (error) {
+            result = await extrairMensageSucesso(result)
+            res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
             logger.error("Erro ao processar enviarAtos:", {
@@ -218,8 +224,8 @@ class ApiController{
                 statusCode = 504;
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
-    
-            res.status(statusCode).json({ error: message, details: error.message });
+            const details = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  details });
         }
     };
 
@@ -227,10 +233,11 @@ class ApiController{
     async nascimento(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.nascimento(user, pass, xmlData);
-
+            var result = await apiService.nascimento(user, pass, xmlData);
+            result = await extrairMensageSucesso(result)
             res.status(200).json(result);
         } catch (error) {
+
             console.error(error); 
         
             logger.error("Erro ao processar enviarAtos:", {
@@ -246,17 +253,18 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     };
     
     async notaGenerica(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.notaGenerica(user, pass, xmlData);
+            var result = await apiService.notaGenerica(user, pass, xmlData);
 
-            res.status(200).json(result);
-        } catch (error) {
+            result = await extrairMensageSucesso(result)
+            res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
             logger.error("Erro ao processar enviarAtos:", {
@@ -272,17 +280,18 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     };
 
     async notaGenerica(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.notaGenerica(user, pass, xmlData);
+            var result = await apiService.notaGenerica(user, pass, xmlData);
 
-            res.status(200).json(result);
-        } catch (error) {
+            result = await extrairMensageSucesso(result)
+            res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
             logger.error("Erro ao processar enviarAtos:", {
@@ -298,16 +307,47 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
+        }
+    };
+    
+    
+    async protestoGenerico(req, res)  {
+        try {
+            const { user, pass, xmlData } = req.body;
+            var result = await apiService.protestoGenerico(user, pass, xmlData);
+
+            result = await extrairMensageSucesso(result)
+            res.status(200).json(result);       
+         } catch (error) {
+            console.error(error); 
+        
+            logger.error("Erro ao processar enviarAtos:", {
+                message: error.message,
+                stack: error.stack
+            });
+    
+            let statusCode = 500;
+            let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
+    
+            if (error.code === "ETIMEDOUT") {
+                statusCode = 504;
+                message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
+            }
+    
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
+        
         }
     };
     async notaEscrituraria(req, res)  {
         try {
             const { user, pass, xmlData } = req.body;
-            const result = await apiService.notaEscrituraria(user, pass, xmlData);
+            var result = await apiService.notaEscrituraria(user, pass, xmlData);
 
-            res.status(200).json(result);
-        } catch (error) {
+            result = await extrairMensageSucesso(result)
+            res.status(200).json(result);               } catch (error) {
             console.error(error); 
         
             logger.error("Erro ao processar enviarAtos:", {
@@ -323,7 +363,8 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     };
     async ReconhecimentoFirma (req, res)  {
@@ -357,7 +398,8 @@ class ApiController{
                 message = "Falha ao conectar com o Serviço do TJ. O servidor pode estar indisponível no momento.";
             }
     
-            res.status(statusCode).json({ error: message, details: error.message });
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     };
  

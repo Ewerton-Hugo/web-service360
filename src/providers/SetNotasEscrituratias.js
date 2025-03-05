@@ -1,4 +1,7 @@
+const { SetEmolumento} = require('./SetEmolumento')
+
 function SetNotasEscrituratias(data) {
+    const emolumento = SetEmolumento(data.atosEmolumento)
     const date = new Date();
     const offset = -3;
     const localISO = new Date(date.getTime() + offset * 60 * 60 * 1000)
@@ -58,15 +61,11 @@ function SetNotasEscrituratias(data) {
                 <valorObjeto>${data.ato.objetoNegocio.valorObjeto ?? 0}</valorObjeto>
             </ObjetoNegocio>
         </ato>
+        ${emolumento}
+
     </atos>
     <atosEmolumento>
-        <id>${data.emolumento.id ?? 0}</id>
-        <valor>${data.emolumento.valor ?? 0}</valor>
-        <quantidade>${data.emolumento.quantidade ?? 1}</quantidade>
-        <id_tipo_emolumento>${data.emolumento.id_tipo_emolumento ?? 92}</id_tipo_emolumento>
-        <id_emolumento>${data.emolumento.id_emolumento ?? 853}</id_emolumento>
-        <id_desconto>${data.emolumento.id_desconto ?? 0}</id_desconto>
-        <id_ato>${data.emolumento.id_ato ?? 0}</id_ato>
+        ${emolumento}
     </atosEmolumento>
 </ns2:messageAtos>`;
 

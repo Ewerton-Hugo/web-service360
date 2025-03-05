@@ -1,4 +1,7 @@
+const { SetEmolumento} = require('./SetEmolumento')
+
 function SetNotaGenerica(data) {
+    const emolumento = SetEmolumento(data.atosEmolumento)
     const date = new Date();
     const offset = -3;
     const localISO = new Date(date.getTime() + offset * 60 * 60 * 1000)
@@ -56,30 +59,10 @@ function SetNotaGenerica(data) {
             </Registro>
             <ClausulaGeral>${data.ato.ClausulaGeral ?? 'S A I B A M quantos este P\u00FAblico Instrumento de Procura\u00E7\u00E3o'}</ClausulaGeral>
         </ato>
-        ${data.atoEmolumento.map(emolumento => `
-        <atoEmolumento>
-            <id>${emolumento.id ?? 0}</id>
-            <valor>${emolumento.valor ?? 22.43}</valor>
-            <quantidade>${emolumento.quantidade ?? 1}</quantidade>
-            <id_tipo_emolumento>${emolumento.id_tipo_emolumento ?? 79}</id_tipo_emolumento>
-            <id_emolumento>${emolumento.id_emolumento ?? 64}</id_emolumento>
-            <id_desconto>${emolumento.id_desconto ?? 0}</id_desconto>
-            <id_ato>${emolumento.id_ato ?? 0}</id_ato>
-        </atoEmolumento>
-        `).join('')}
+        ${emolumento}
     </atos>
     <atosEmolumento>
-        ${data.atosEmolumento.map(emolumento => `
-        <atoEmolumento>
-            <id>${emolumento.id ?? 0}</id>
-            <valor>${emolumento.valor ?? 22.43}</valor>
-            <quantidade>${emolumento.quantidade ?? 1}</quantidade>
-            <id_tipo_emolumento>${emolumento.id_tipo_emolumento ?? 79}</id_tipo_emolumento>
-            <id_emolumento>${emolumento.id_emolumento ?? 64}</id_emolumento>
-            <id_desconto>${emolumento.id_desconto ?? 0}</id_desconto>
-            <id_ato>${emolumento.id_ato ?? 0}</id_ato>
-        </atoEmolumento>
-        `).join('')}
+        ${emolumento}
     </atosEmolumento>
 </ns2:messageAtos>`;
 
