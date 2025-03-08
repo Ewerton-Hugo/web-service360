@@ -98,31 +98,78 @@ function extractBoundaryFromResponse(response) {
 }
 
 
+// function extrairSelos(xmlString) {
+//     const parser = new DOMParser();
+//     const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+
+//     const selosNodeList = xmlDoc.getElementsByTagName('selo');
+//     const selosArray = [];
+
+//     for (let i = 0; i < selosNodeList.length; i++) {
+//         const selo = selosNodeList[i];
+        
+//         const tipoSelo = selo.getElementsByTagName('tipoSelo')[0]?.textContent || '';
+//         const numeroSerie = selo.getElementsByTagName('numeroSerie')[0]?.textContent || '';
+//         const validador = selo.getElementsByTagName('validador')[0]?.textContent || '';
+//         const nuCartorio = selo.getElementsByTagName('nuCartorio')[0]?.textContent || '';
+
+//         selosArray.push({
+//             tipoSelo,
+//             numeroSerie,
+//             validador,
+//             nuCartorio
+//         });
+//     }
+
+//     return { selos: selosArray };
+// }
+
 function extrairSelos(xmlString) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
 
-    const selosNodeList = xmlDoc.getElementsByTagName('selo');
     const selosArray = [];
+    let seloNodes;
 
-    for (let i = 0; i < selosNodeList.length; i++) {
-        const selo = selosNodeList[i];
-        
+    // Verifica qual padrão de XML está sendo utilizado
+    if (xmlDoc.getElementsByTagName('selo').length > 0) {
+        seloNodes = xmlDoc.getElementsByTagName('selo'); // Padrão 1
+    } else {
+        seloNodes = xmlDoc.getElementsByTagName('return'); // Padrão SOAP
+    }
+
+    for (let i = 0; i < seloNodes.length; i++) {
+        const selo = seloNodes[i];
+
         const tipoSelo = selo.getElementsByTagName('tipoSelo')[0]?.textContent || '';
+        const valorSelo = selo.getElementsByTagName('valorSelo')[0]?.textContent || '';
         const numeroSerie = selo.getElementsByTagName('numeroSerie')[0]?.textContent || '';
         const validador = selo.getElementsByTagName('validador')[0]?.textContent || '';
+        const dataGeracao = selo.getElementsByTagName('dataGeracao')[0]?.textContent || '';
         const nuCartorio = selo.getElementsByTagName('nuCartorio')[0]?.textContent || '';
+        const fl_status = selo.getElementsByTagName('fl_status')[0]?.textContent || '';
+        const idArquivoProtocolo = selo.getElementsByTagName('idArquivoProtocolo')[0]?.textContent || '';
+        const idLoteSelo = selo.getElementsByTagName('idLoteSelo')[0]?.textContent || '';
+        const tipoCompra = selo.getElementsByTagName('tipoCompra')[0]?.textContent || '';
 
         selosArray.push({
             tipoSelo,
+            valorSelo,
             numeroSerie,
             validador,
-            nuCartorio
+            dataGeracao,
+            nuCartorio,
+            fl_status,
+            idArquivoProtocolo,
+            idLoteSelo,
+            tipoCompra
         });
     }
 
     return { selos: selosArray };
 }
+
+
 
 function    extrairMEnsagemSimples(xmlString,tagName) {
     const parser = new DOMParser();

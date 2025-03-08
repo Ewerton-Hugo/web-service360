@@ -1,91 +1,65 @@
-<?xml version="1.0"?>
-<ns2:messageAtos version="3.0" numeroSelo="AAA38743" xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" numeroSeloAnterior="" flDut="false">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:messageAtos version="3.0" numeroSelo="AAA00083" xmlns:ns2="http://www.tjal.jus.br/selo/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <messageID>0</messageID>
-    <messageDate>2023-10-04T00:00:00.000-03:00</messageDate>
-    <codigoServentia>12</codigoServentia>
+    <messageDate>2025-03-05T12:29:35.923-03:00</messageDate>
+    <codigoServentia>24</codigoServentia>
     <atos>
-        <ato xsi:type="ns2:NotasGenerico" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ato xsi:type="ns2:RegistroTitulosDocPJ">
             <idAto>0</idAto>
-            <codigoServentia>1</codigoServentia>
-            <dataAto>2022-10-27T00:00:00.000-03:00</dataAto>
-            <tipoAto>3</tipoAto>
-            <valorEmolumento>22.43</valorEmolumento>
-            <valorAto>51.29</valorAto>
-            <responsavel>1</responsavel>
+            <codigoServentia>24</codigoServentia>
+            <dataAto>2025-03-05T12:29:35.923-03:00</dataAto>
+            <tipoAto>15</tipoAto>
+            <valorEmolumento>00.00</valorEmolumento>
+            <valorAto>18.04</valorAto>
+            <responsavel>24</responsavel>
+            <id_imposto>12</id_imposto>
             <idAtos>0</idAtos>
             <selo>
-                <tipoSelo>47</tipoSelo>
-                <numeroSerie>AAA66665</numeroSerie>
-                <validador>BKQO</validador>
+                <tipoSelo>46</tipoSelo>
+                <numeroSerie>AAA64454</numeroSerie>
+                <validador>ST2M</validador>
             </selo>
             <retificador>false</retificador>
-            <solicitante>
-                <nomePessoa>MARIA BERNADETE DOS SANTOS</nomePessoa>
-                <tipoPessoa>Física</tipoPessoa>
-                <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>59421274415</numero>
-                </documento>
-            </solicitante>
-            <SubTipoAto>42</SubTipoAto>
-            <ValidadeAto>N/A</ValidadeAto>
-            <Protocolo>47/2022</Protocolo>
-            
-            <Partes>
-                <nomePessoa>MARIA BERNADETE DOS SANTOS</nomePessoa>
-                <tipoPessoa>Física</tipoPessoa>
-                <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>59421274415</numero>
-                </documento>
-            </Partes>
-            
-            <Partes>
-                <nomePessoa>ZENILDA PROCOPIO DOS SANTOS</nomePessoa>
-                <tipoPessoa>Física</tipoPessoa>
-                <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>04604343497</numero>
-                </documento>
-            </Partes>
-            
-            <Partes>
-                <nomePessoa>JOSÉ OLIVEIRA DA SILVA</nomePessoa>
-                <tipoPessoa>Física</tipoPessoa>
-                <documento>
-                    <tipoDocumento>8</tipoDocumento>
-                    <numero>08626573421</numero>
-                </documento>
-            </Partes>
-            
+            <Recolhimentos>
+                <nomeImposto>FUNJURIS</nomeImposto>
+                <valorPago>0</valorPago>
+            </Recolhimentos>
+            <Recolhimentos>
+                <nomeImposto>FERC + ANOREG</nomeImposto>
+                <valorPago>0</valorPago>
+            </Recolhimentos>
+            <SubTipoAto>71</SubTipoAto>
+            <ValidadeAto>71</ValidadeAto>
+            <Protocolo>11</Protocolo>
+            <DocRegistrado>11</DocRegistrado>
             <Registro>
-                <codigoLivro>13</codigoLivro>
-                <paginaInicial>152</paginaInicial>
-                <paginaFinal>152</paginaFinal>
-                <dataRegistro>2022-10-27-03:00</dataRegistro>
+                <codigoLivro>11</codigoLivro>
+                <paginaInicial>11</paginaInicial>
+                <paginaFinal>11</paginaFinal>
+                <dataRegistro>2019-02-26-03:00</dataRegistro>
             </Registro>
-            <ClausulaGeral>S A I B A M quantos este Público Instrumento de Procuração, subscxxxxxxxxxxxxxxxxxxxxxxxxx</ClausulaGeral>
+            <ClausulaGeral>1</ClausulaGeral>
         </ato>
         
         <atoEmolumento>
             <id>0</id>
-            <valor>22.43</valor>
+            <valor>99.21</valor>
             <quantidade>1</quantidade>
-            <id_tipo_emolumento>79</id_tipo_emolumento>
-            <id_emolumento>64</id_emolumento>
+            <id_tipo_emolumento>73</id_tipo_emolumento>
+            <id_emolumento>123</id_emolumento>
             <id_desconto>0</id_desconto>
             <id_ato>0</id_ato>
             <id_ato_multiplo>0</id_ato_multiplo>
         </atoEmolumento>
-    </atos>
+    </atos> 
     <atosEmolumento>
         
         <atoEmolumento>
             <id>0</id>
-            <valor>22.43</valor>
+            <valor>99.21</valor>
             <quantidade>1</quantidade>
-            <id_tipo_emolumento>79</id_tipo_emolumento>
-            <id_emolumento>64</id_emolumento>
+            <id_tipo_emolumento>73</id_tipo_emolumento>
+            <id_emolumento>123</id_emolumento>
             <id_desconto>0</id_desconto>
             <id_ato>0</id_ato>
             <id_ato_multiplo>0</id_ato_multiplo>

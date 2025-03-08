@@ -7,7 +7,8 @@ const { upload } = require('../config/multer');
 
 
 routes.post('/resdisponibilizar_Ultima_Transmissao', apiController.ResdisponibilizarUltimaTransmissao);
-routes.post('/fornecer_Selos', apiController.FornecerSelos);
+routes.post('/fornecer_selos', apiController.FornecerSelos);
+routes.post('/fornecer_selos_por_lote', apiController.FornecerSelosPorLote);
 
 routes.post('/enviar/registro_titulos_doc_pJ', apiController.registroTitulosDocPJ);
 routes.post('/enviar/registro_imoveis', apiController.registroImoveis);//erro

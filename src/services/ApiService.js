@@ -85,10 +85,44 @@ class ApiService {
                         'Content-Type': 'text/xml;charset=UTF-8',
                         'SOAPAction': '',
                     },
+                    timeout: 300000, 
                 }
             );
 
             // return response.data;        
+            return extrairSelos(response.data);
+
+    }
+
+    async FornecerSelosPorLote(user, pass,nuLote,statusSelo) {
+        console.log('nuLotes: ',nuLote)
+        const soapEnvelope = `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:selo="http://www.tjal.jus.br/selo">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <selo:consultarSelosPorLote>
+                    <user>${user}</user>
+                    <pass>${pass}</pass>
+                    <nuLote>${nuLote}</nuLote>
+                    <statusSelo>${statusSelo}</statusSelo>
+                </selo:consultarSelosPorLote>
+            </soapenv:Body>
+        </soapenv:Envelope> 
+        `;
+
+            const response = await axios.post(
+
+                ApiService.webservice,
+                soapEnvelope,
+                {
+                    headers: {
+                        'Content-Type': 'text/xml;charset=UTF-8',
+                        'SOAPAction': '',
+                    },
+                }
+            );
+
+            // return response.data;           
             return extrairSelos(response.data);
 
     }

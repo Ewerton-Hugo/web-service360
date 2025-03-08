@@ -87,6 +87,53 @@ class ApiController{
             res.status(statusCode).json({ error: message, details:  detailsMenssage });       
         }
     }
+
+    async FornecerSelosPorLote(req, res) {
+        const jsonData = req.body;
+        
+        try {
+            const result = await apiService.FornecerSelosPorLote(
+                jsonData.user,
+                jsonData.pass,
+                jsonData.nuLote,
+                jsonData.statusSelo
+            );
+    
+            logger.warn("Executando consultarSelos", result);
+    
+            res.status(200).send(result);
+        } catch (error) {
+            logger.error(error);
+    
+            let statusCode = 500;
+            let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
+            let details = {};
+    
+            if (error.response) {
+                // O servidor respondeu com um status de erro
+                statusCode = error.response.status || 500;
+                message = error.response.statusText || "Erro desconhecido no servidor.";
+                details = {
+                    status: error.response.status,
+                    statusText: error.response.statusText,
+                    data: error.response.data, // Detalhes do erro retornado pelo servidor
+                    headers: error.response.headers, // Cabeçalhos da resposta
+                };
+            } else if (error.request) {
+                // A requisição foi feita, mas não houve resposta do servidor
+                statusCode = 504;
+                message = "Falha ao conectar com o serviço do TJ. O servidor pode estar indisponível.";
+                details = { request: error.request };
+            } else {
+                // Erro na configuração da requisição
+                message = error.message;
+                details = { stack: error.stack };
+            }
+    
+            const detailsMenssage = extrairMEnsagemSimples( error.response.data, 'faultstring')
+            res.status(statusCode).json({ error: message, details:  detailsMenssage });       
+        }
+    }
     
     async VerificaTransmissao(req, res){
 
