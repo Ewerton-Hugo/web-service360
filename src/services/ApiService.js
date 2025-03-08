@@ -42,7 +42,7 @@ class ApiService {
         `;
             const response = await axios.post(
 
-                ApiService.webservice,
+                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
                 soapEnvelope,
                 {
                     headers: {
