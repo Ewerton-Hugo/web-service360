@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "test": "jest",
     "dev": "nodemon src/app.js",
-    "start": "nohup nodemon src/app.js > output.log 2>&1 &",
+    "start": "node src/app.js",
     "pm2": "pm2 start src/app.js --name web-service-360-producao",
     "pm2-stop": "pm2 stop web-service-360-producao",
     "pm2-delete": "pm2 delete crud-back"

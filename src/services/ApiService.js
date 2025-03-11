@@ -23,7 +23,7 @@ class ApiService {
     static webservice;  
 
     static {
-        this.webservice = process.env.PROJECT === 'production' 
+        this.webservice = process.env.PROJECT2 === 'production' 
             ? process.env.TJ_PRODUCTION 
             : process.env.TJ_DESENV;
     }
@@ -42,7 +42,7 @@ class ApiService {
         `;
             const response = await axios.post(
 
-                "https://hmlselows02.tjal.jus.br/SeloCore/SeloService",
+                "https://google.com",
                 soapEnvelope,
                 {
                     headers: {
