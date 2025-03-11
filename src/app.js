@@ -3,7 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { sequelize } = require('./config/sequelizeConf');
+// const { sequelize } = require('./config/sequelizeConf');
 const { routes } = require('./routes/api.routes');
 const cors = require('cors');
 require('dotenv').config();
