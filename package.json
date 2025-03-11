@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon src/app.js",
-    "start": "node src/app.js",
+    " ": "node src/app.js",
     "pm2": "pm2 start src/app.js --name web-service-360-producao",
     "pm2-stop": "pm2 stop web-service-360-producao",
     "pm2-delete": "pm2 delete crud-back"
