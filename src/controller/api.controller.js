@@ -2,7 +2,7 @@
 
 
 const {ApiService} = require('../services/ApiService')
-const {logger} = require('../config/logger')
+// const {logger} = require('../config/logger')
 const fs = require('fs');
 const {extrairMensageSucesso, jsonToXml,extrairMEnsagemSimples} = require('../providers/XmlToJson')
 
@@ -15,16 +15,16 @@ class ApiController{
         try {
             var result = await apiService.resdisponibilizarUltimaTransmissao(jsonData.user, jsonData.pass);
             
-            logger.warn("Executando consultarSelos:", result);
+            // logger.warn("Executando consultarSelos:", result);
             
             res.status(200).json(result);        
         } catch (error) {
             console.error(error); // Exibe o erro completo no console
         
-            logger.error("Erro ao processar ResdisponibilizarUltimaTransmissao:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar ResdisponibilizarUltimaTransmissao:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -52,11 +52,11 @@ class ApiController{
                 jsonData.tipoCompra
             );
     
-            logger.warn("Executando consultarSelos", result);
+            // logger.warn("Executando consultarSelos", result);
     
             res.status(200).send(result);
         } catch (error) {
-            logger.error(error);
+            // logger.error(error);
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -99,11 +99,11 @@ class ApiController{
                 jsonData.statusSelo
             );
     
-            logger.warn("Executando consultarSelos", result);
+            // logger.warn("Executando consultarSelos", result);
     
             res.status(200).send(result);
         } catch (error) {
-            logger.error(error);
+            // logger.error(error);
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -140,14 +140,14 @@ class ApiController{
         const jsonData = req.body;
         try {
             const result = await apiService.VerificaTransmissao(jsonData.user, jsonData.pass,  jsonData.nuCns);
-            logger.warn("Executando VerificaTransmissao". result)
+            // logger.warn("Executando VerificaTransmissao". result)
 
             res.status(200).send(result);    
         
     
       
         } catch (error) {
-            logger.error(error);
+            // logger.error(error);
             // res.json(error)
 
           let statusCode = 500;
@@ -169,14 +169,14 @@ class ApiController{
         const jsonData = req.body;
         try {
             const result = await apiService.EmolumentoTransmissao(jsonData.user, jsonData.pass,  jsonData.messageIDtransmissao);
-            logger.warn("Executando EmolumentoTransmissao". result)
+            // logger.warn("Executando EmolumentoTransmissao". result)
 
             res.status(200).send(result);    
         
     
       
         } catch (error) {
-            logger.error(error);
+            // logger.error(error);
             // res.json(error)
 
           let statusCode = 500;
@@ -199,14 +199,14 @@ class ApiController{
         const jsonData = req.body;
         try {
             const result = await apiService.DescontoTransmissao(jsonData.user, jsonData.pass, jsonData.nuLote, jsonData.statusSelo);
-            logger.warn("Executando EmolumentoTransmissao". result)
+            // logger.warn("Executando EmolumentoTransmissao". result)
 
             res.status(200).send(result);    
         
     
       
         } catch (error) {
-            logger.error(error);
+            // logger.error(error);
             // res.json(error)
 
           let statusCode = 500;
@@ -232,10 +232,10 @@ class ApiController{
         } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -259,10 +259,10 @@ class ApiController{
             res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -287,10 +287,10 @@ class ApiController{
 
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -314,10 +314,10 @@ class ApiController{
             res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -341,10 +341,10 @@ class ApiController{
             res.status(200).json(result);        } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -370,10 +370,10 @@ class ApiController{
          } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
@@ -397,10 +397,10 @@ class ApiController{
             res.status(200).json(result);               } catch (error) {
             console.error(error); 
         
-            logger.error("Erro ao processar enviarAtos:", {
-                message: error.message,
-                stack: error.stack
-            });
+            // logger.error("Erro ao processar enviarAtos:", {
+            //     message: error.message,
+            //     stack: error.stack
+            // });
     
             let statusCode = 500;
             let message = "Erro ao processar a requisição. Tente novamente mais tarde.";
